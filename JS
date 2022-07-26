@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"><!--网页宽度自动适应手机屏幕宽度-->
+        <script src="E:\jquery-3.6.0.js"></script><!--jquery库-->
+        <title>基本数组操作</title>
+        <style>
+            .flex-container {
+                display: -webkit-flex;
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                justify-content: space-around;
+            }
+            .flex-item1{
+                font-family:Helvetica,Arial,sans-serif;/*字体名称*/
+                -webkit-font-smoothing:antialiased;/*抗锯齿，字体更清晰*/
+                -moz-osx-font-smoothing:grayscale;/*用灰度抗锯齿渲染文本*/
+            }
+            .flex-item2{
+                font-family:Helvetica,Arial,sans-serif;
+                -webkit-font-smoothing:antialiased;
+                -moz-osx-font-smoothing:grayscale;
+            }
+            .box1{
+                margin-top:70px;/*上边距*/
+            }
+            .box2{
+                text-align:center;
+                margin-top:30px;/*上边距*/
+                line-height:0;/*行间距*/
+            }
+        </style>
+    </head>
+    <body>
+        <div class="flex-container">
+            <div class=".flex-item1">
+                <div class="box1">
+                    <h4 align="center">基本数组操作</h4>
+                    <p id="1" align="center">[1, 2, 3, 4, 5, "abc", "d", "e"]</p>
+                </div>
+                <div class="box2">
+                    <input type="text" id="3" placeholder="添加的数据" style="height:25px;width:200px;">
+                    <button type="button" onclick="ttj()">数组头部添加</button>
+                    <button type="button" onclick="wtj()">数组末尾添加【数字】</button>
+                    <button type="button" onclick="ztj()">数组中心项添加</button>
+                    <span>(若长度为奇数则添加到中心靠前一项)</span>
+                    <br>
+                    <button type="button" onclick="tsc()">数组头部删除</button>
+                    <button type="button" onclick="wsc()">数组末尾删除</button>
+                    <button type="button" onclick="scall()">删除所有不是数字的元素</button>
+                    <button type="button" onclick="px()">从大到小排序</button>
+                    <button type="button" onclick="qc()">数字去重</button>
+                </div>
+            </div> 
+            <div class=".flex-item2">
+                <div class="box1">
+                    <h4 align="center">基本字符串操作</h4>
+                    <p id="2" align="center">Hello World! 2021/6/3</p>
+                </div>
+                <div class="box2">
+                    <input type="text" id="4" placeholder="判断的元素" style="height:25px;width:200px;">
+                    <button type="button" onclick="sl()">判断字符串中某元素的数量</button>
+                    <br>
+                    <button type="button" onclick="cd()">统计字符串长度</button>
+                    <button type="button" onclick="xx()">将字符串转为全小写</button>
+                    <button type="button" onclick="jq()">截取日期“2021/6/3”</button>
+                    <button type="button" onclick="th()">将日期中的斜杠替换为“-”</button>
+                </div>
+            </div>
+        </div>
+        <script>
+            a=[1, 2, 3, 4, 5, "abc", "d", "e"];
+            function ttj(){
+                x=document.getElementById("3").value;//获取input里面的值；
+                x.toString();//转为字符串;
+                a.unshift(x);//头部添加函数unshift;
+                document.getElementById("1").innerHTML="["+a+"]";
+                console.log("头部添加",a);
+            }
+            function wtj(){
+                y=document.getElementById("3").value;
+                if(isNaN(Number(y))){//判断是否为数字
+                    alert("不是数字,警告!");
+                }
+                else{
+                    t=parseInt(y);
+                    a.push(t);
+                    document.getElementById("1").innerHTML="["+a+"]";
+                }
+                console.log("尾部添加",a);
+            }
+            function ztj(){
+                y=document.getElementById("3").value;
+                if(a.length%2==0){
+                    a.splice(a.length/2,0,y);//居中添加;
+                    document.getElementById("1").innerHTML="["+a+"]";
+                }
+                else{
+                    a.splice((a.length-1)/2,0,y);//靠前添加;
+                    document.getElementById("1").innerHTML="["+a+"]";
+                }
+                console.log("居中添加",a);
+            }
+            function tsc(){
+                b=a;
+                b.shift();//头部删除;
+                document.getElementById("1").innerHTML="["+b+"]";
+                console.log("头部删除",b);
+            }
+            function wsc(){
+                b=a;
+                b.pop();//尾部删除;
+                document.getElementById("1").innerHTML="["+b+"]";
+                console.log("尾部删除",b);
+            }
+            function scall(){
+                b=a;
+                for (var i=0;i<b.length;i++){
+                    if(isNaN(Number(b[i]))){
+                        b.splice(i,1);//判断是否为数字，不是则删除;
+                        i--;
+                    }
+                    document.getElementById("1").innerHTML="["+b+"]";
+                }
+                console.log("删除非数字",b);
+            }
+            function px(){
+                b=a;
+                for(i=0;i<b.length;i++)
+                {
+                    if(b[i]!=isNaN){
+                        b.sort(function (x,y){
+                            return y-x;//降序排列;
+                        });
+                    }
+                    document.getElementById("1").innerHTML="["+b+"]";    
+                }
+                console.log("排序",b);
+            }
+            function qc(){
+                b=a;
+                for(i=0;i<b.length;i++){
+                    for(j=i+1;j<b.length;j++){
+                        if(b[i]===b[j])
+                        {
+                            b.splice(i,1);//去重;
+                            i--;
+                            j--;
+                        }
+                        document.getElementById("1").innerHTML="["+b+"]";
+                    }
+                }
+                console.log("去重",b);
+            }
+            str="Hello World! 2021/6/3";
+            function sl(){
+                y=document.getElementById("4").value;
+                var n=(str.split(y)).length-1;//分割字符串,判断次数;
+                alert("元素在字符串中出现次数:"+n);
+            }
+            function cd(){
+                var t=str.length;
+                alert("字符串长度为:"+t);//长度
+            }
+            function xx(){
+                t=str;
+                document.getElementById("2").innerHTML=t.toLowerCase();//改为小写;
+                str=t.toLowerCase();
+            }
+            function jq(){
+                t=str.substring(13);//截取;
+                document.getElementById("2").innerHTML=t;
+                str=t;
+            }
+            function th(){
+                var reg=new RegExp('/','g');//正则表达式,g全局匹配;
+                var t=str.replace(reg,'-');
+                document.getElementById("2").innerHTML=t;//替换;
+                str=t;
+            }
+        </script>
+    </body>
+</html>
